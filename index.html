@@ -58,11 +58,16 @@
     <a class="cta" href="https://example.com" target="_blank">🔥 Enter Now (18+)</a>
   </div>
 
-  <audio id="hellsound" src="hell_music.mp3"></audio>
-  <script>
-    document.querySelector('.cta').addEventListener('click', function() {
-      document.getElementById('hellsound').play();
-    });
+  <button id="playBtn" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:1.5rem;padding:1rem 2rem;">Enter</button>
+<audio id="hellAudio" loop>
+  <source src="hell_music.mp3" type="audio/mpeg">
+</audio>
+<script>
+  document.getElementById('playBtn').addEventListener('click', function () {
+    document.getElementById('hellAudio').play();
+    this.style.display = 'none';
+  });
+</script>
   </script>
 </body>
 </html>
