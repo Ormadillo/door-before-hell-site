@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Door Before Hell</title>
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Door Before Hell</title>
+<style>
     html, body {
       margin: 0;
       padding: 0;
@@ -21,6 +20,7 @@
       min-width: 100%;
       min-height: 100%;
       z-index: -1;
+      object-fit: cover;
     }
     .content {
       position: absolute;
@@ -40,34 +40,210 @@
       font-weight: bold;
       border-radius: 12px;
       animation: flash 1s infinite;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .cta:hover {
+      transform: scale(1.05);
     }
     @keyframes flash {
       0%, 100% { opacity: 1; }
       50% { opacity: 0.3; }
     }
-  </style>
+    
+    .audio-controls {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+    }
+    
+    .audio-btn {
+      background: rgba(255, 20, 147, 0.8);
+      border: none;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+    
+    .audio-btn:hover {
+      background: rgba(255, 20, 147, 1);
+    }
+    
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.8);
+    }
+    
+    .modal-content {
+      background-color: #1a1a1a;
+      margin: 15% auto;
+      padding: 30px;
+      border-radius: 15px;
+      width: 400px;
+      max-width: 90%;
+      text-align: center;
+      border: 2px solid hotpink;
+    }
+    
+    .modal-content h2 {
+      color: hotpink;
+      margin-bottom: 20px;
+    }
+    
+    .modal-content p {
+      margin-bottom: 25px;
+      line-height: 1.5;
+    }
+    
+    .modal-btn {
+      padding: 12px 24px;
+      margin: 0 10px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    
+    .modal-btn:hover {
+      transform: scale(1.05);
+    }
+    
+    .btn-yes {
+      background-color: hotpink;
+      color: white;
+    }
+    
+    .btn-no {
+      background-color: #666;
+      color: white;
+    }
+    
+    .warning {
+      color: #ff4444;
+      font-size: 14px;
+      margin-top: 15px;
+    }
+</style>
 </head>
 <body>
-  <video id="bgvid" autoplay muted loop>
-    <source src="hell_bg.mp4" type="video/mp4">
-  </video>
+<video autoplay="" id="bgvid" loop="" muted="">
+<source src="hell_bg.mp4" type="video/mp4"/>
+</video>
 
-  <div class="content">
-    <h1>🚪 Dare to Enter?</h1>
-    <p>Only the bold unlock what lies beyond the Door Before Hell.</p>
-    <a class="cta" href="https://example.com" target="_blank">🔥 Enter Now (18+)</a>
-  </div>
+<div class="content">
+<h1>🚪 Dare to Enter?</h1>
+<p>Only the bold unlock what lies beyond the Door Before Hell.</p>
+<button class="cta" id="enterBtn">🔥 Enter Now (18+)</button>
+</div>
 
-  <button id="playBtn" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:1.5rem;padding:1rem 2rem;">Enter</button>
-<audio id="hellAudio" loop>
-  <source src="hell_music.mp3" type="audio/mpeg">
+<div class="audio-controls">
+<button class="audio-btn" id="audioToggle">🔊 Unmute</button>
+</div>
+
+<!-- Age Verification Modal -->
+<div id="ageModal" class="modal">
+<div class="modal-content">
+<h2>Age Verification Required</h2>
+<p>This content is intended for adults only. You must be 18 years or older to continue.</p>
+<p><strong>Are you 18 years of age or older?</strong></p>
+<button class="modal-btn btn-yes" id="ageYes">Yes, I'm 18+</button>
+<button class="modal-btn btn-no" id="ageNo">No, I'm under 18</button>
+<p class="warning">⚠️ By clicking "Yes", you confirm that you are of legal age in your jurisdiction.</p>
+</div>
+</div>
+
+<audio id="hellAudio" loop="">
+<source src="hell_music.mp3" type="audio/mpeg"/>
 </audio>
+
 <script>
-  document.getElementById('playBtn').addEventListener('click', function () {
-    document.getElementById('hellAudio').play();
-    this.style.display = 'none';
-  });
+let audioPlaying = false;
+let ageVerified = false;
+
+// Check if user was already verified (optional - removes verification on refresh)
+// if (localStorage.getItem('ageVerified') === 'true') {
+//   ageVerified = true;
+// }
+
+const enterBtn = document.getElementById('enterBtn');
+const ageModal = document.getElementById('ageModal');
+const ageYes = document.getElementById('ageYes');
+const ageNo = document.getElementById('ageNo');
+const audioToggle = document.getElementById('audioToggle');
+const hellAudio = document.getElementById('hellAudio');
+
+// Enter button click
+enterBtn.addEventListener('click', function() {
+  if (!ageVerified) {
+    ageModal.style.display = 'block';
+  } else {
+    // User is verified, proceed to your content
+    proceedToContent();
+  }
+});
+
+// Age verification - Yes
+ageYes.addEventListener('click', function() {
+  ageVerified = true;
+  // Optional: Remember verification
+  // localStorage.setItem('ageVerified', 'true');
+  ageModal.style.display = 'none';
+  proceedToContent();
+});
+
+// Age verification - No
+ageNo.addEventListener('click', function() {
+  ageModal.style.display = 'none';
+  // Redirect to appropriate site or show message
+  alert('You must be 18 or older to access this content.');
+  // window.location.href = 'https://www.google.com';
+});
+
+// Audio toggle
+audioToggle.addEventListener('click', function() {
+  if (audioPlaying) {
+    hellAudio.pause();
+    audioToggle.textContent = '🔊 Unmute';
+    audioPlaying = false;
+  } else {
+    hellAudio.play().catch(function(error) {
+      console.log('Audio play failed:', error);
+    });
+    audioToggle.textContent = '🔇 Mute';
+    audioPlaying = true;
+  }
+});
+
+// Function to proceed to actual content
+function proceedToContent() {
+  // Replace this with your actual content logic
+  // For example, redirect to the main site:
+  window.location.href = 'https://your-actual-site.com';
+  
+  // Or show hidden content:
+  // document.querySelector('.hidden-content').style.display = 'block';
+}
+
+// Close modal when clicking outside
+window.addEventListener('click', function(event) {
+  if (event.target === ageModal) {
+    ageModal.style.display = 'none';
+  }
+});
 </script>
-  </script>
 </body>
 </html>
