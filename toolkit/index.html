@@ -3,569 +3,480 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Delinquent Toolkit | CReativeLAZY</title>
+    <title>Digital Delinquent Toolkit | CreativeLazy</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&display=swap');
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         body {
-            font-family: 'Inter', sans-serif;
-            background: #0a0a0a;
-            color: #fff;
+            font-family: 'Space Grotesk', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            min-height: 100vh;
             overflow-x: hidden;
-            line-height: 1.5;
         }
-
-        /* Animated background */
-        body::before {
-            content: '';
+        
+        .cyber-grid {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(255, 20, 147, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(0, 255, 255, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(255, 255, 0, 0.05) 0%, transparent 50%);
-            animation: pulse 8s ease-in-out infinite;
+            background-image: 
+                linear-gradient(rgba(78, 205, 196, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(78, 205, 196, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
             z-index: -1;
+            animation: gridPulse 4s ease-in-out infinite;
         }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
+        
+        @keyframes gridPulse {
+            0%, 100% { opacity: 0.1; }
+            50% { opacity: 0.3; }
         }
-
+        
         .container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
+            position: relative;
+            z-index: 1;
         }
-
-        /* Header */
+        
         .header {
             text-align: center;
             margin-bottom: 60px;
-            position: relative;
+            padding: 40px 0;
         }
-
-        .glitch-title {
-            font-size: clamp(2.5rem, 8vw, 5rem);
-            font-weight: 800;
-            background: linear-gradient(135deg, #ff1493, #00ffff, #ffff00);
-            background-size: 300% 300%;
+        
+        .title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            background: linear-gradient(45deg, #4ecdc4, #45b7d1, #96ceb4, #ffeaa7);
+            background-size: 400% 400%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: gradient-shift 3s ease infinite, glitch 0.3s ease-in-out infinite alternate;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: -2px;
-        }
-
-        @keyframes gradient-shift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        @keyframes glitch {
-            0% { text-shadow: 2px 0 #ff1493, -2px 0 #00ffff; }
-            100% { text-shadow: -2px 0 #ff1493, 2px 0 #00ffff; }
-        }
-
-        .subtitle {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1.2rem;
-            color: #888;
+            background-clip: text;
+            animation: gradientShift 3s ease-in-out infinite;
             margin-bottom: 20px;
+            text-shadow: 0 0 30px rgba(78, 205, 196, 0.5);
         }
-
-        .manifesto {
-            max-width: 600px;
-            margin: 0 auto;
-            font-size: 1.1rem;
-            color: #ddd;
-            line-height: 1.7;
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 30px;
-            position: relative;
+        
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
-
-        .manifesto::before {
-            content: '💀';
-            position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #0a0a0a;
-            padding: 0 15px;
-            font-size: 1.5rem;
-        }
-
-        /* Main content layout */
-        .content-grid {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 40px;
-            margin-top: 60px;
-        }
-
-        /* Workflow column */
-        .workflow-section {
-            background: linear-gradient(135deg, rgba(255, 20, 147, 0.1), rgba(0, 0, 0, 0.8));
-            border: 1px solid rgba(255, 20, 147, 0.3);
-            border-radius: 25px;
-            padding: 30px;
-            position: relative;
-            backdrop-filter: blur(15px);
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .section-title {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: #ff1493;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .section-subtitle {
-            font-family: 'JetBrains Mono', monospace;
-            color: #888;
-            font-size: 0.9rem;
-        }
-
-        .workflow-step {
-            margin-bottom: 25px;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 15px;
-            border-left: 4px solid #ff1493;
-            transition: all 0.3s ease;
-        }
-
-        .workflow-step:hover {
-            background: rgba(255, 20, 147, 0.1);
-            transform: translateX(5px);
-        }
-
-        .step-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #ff1493;
-            margin-bottom: 8px;
-        }
-
-        .step-description {
-            color: #ddd;
-            margin-bottom: 8px;
-        }
-
-        .step-note {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.85rem;
-            color: #888;
-            font-style: italic;
-        }
-
-        .lazy-truth {
-            text-align: center;
-            margin-top: 30px;
-            padding: 20px;
-            background: rgba(255, 255, 0, 0.1);
-            border: 1px solid rgba(255, 255, 0, 0.3);
-            border-radius: 15px;
-        }
-
-        .truth-title {
-            color: #ffff00;
-            font-weight: 700;
+        
+        .subtitle {
+            font-size: 1.3rem;
+            color: #4ecdc4;
+            font-weight: 300;
             margin-bottom: 10px;
         }
-
-        .truth-text {
-            color: #ccc;
-            font-size: 0.9rem;
-            line-height: 1.4;
-        }
-
-        /* Tools section */
-        .tools-section {
-            background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(0, 0, 0, 0.8));
-            border: 1px solid rgba(0, 255, 255, 0.3);
-            border-radius: 25px;
-            padding: 30px;
-            backdrop-filter: blur(15px);
-        }
-
-        .tools-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .tools-title {
-            font-size: 2rem;
-            font-weight: 800;
-            color: #00ffff;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-        }
-
-        .tools-intro {
-            color: #ddd;
+        
+        .manifesto {
             font-size: 1rem;
-            max-width: 500px;
+            color: #a0a0a0;
+            max-width: 600px;
             margin: 0 auto;
             line-height: 1.6;
         }
-
-        .tool-category {
-            margin-bottom: 35px;
-        }
-
-        .category-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #00ffff;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .category-desc {
-            color: #888;
-            font-size: 0.9rem;
-            margin-bottom: 15px;
-            font-style: italic;
-        }
-
-        .tool-list {
-            display: grid;
-            gap: 12px;
-        }
-
-        .tool-item {
-            display: flex;
-            align-items: center;
-            padding: 15px;
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
+        
+        .section {
+            margin-bottom: 60px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 20px;
+            border: 1px solid rgba(78, 205, 196, 0.2);
+            backdrop-filter: blur(10px);
             position: relative;
             overflow: hidden;
         }
-
-        .tool-item::before {
+        
+        .section::before {
             content: '';
             position: absolute;
             top: 0;
             left: -100%;
             width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.1), transparent);
-            transition: left 0.5s ease;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #4ecdc4, transparent);
+            animation: sweep 3s infinite;
         }
-
-        .tool-item:hover {
-            border-color: #00ffff;
-            transform: translateY(-2px);
+        
+        @keyframes sweep {
+            0% { left: -100%; }
+            100% { left: 100%; }
         }
-
-        .tool-item:hover::before {
-            left: 100%;
-        }
-
-        .tool-arrow {
-            color: #ffff00;
-            font-weight: bold;
-            margin-right: 12px;
-            font-size: 1.2rem;
-        }
-
-        .tool-link {
-            color: #00ffff;
-            text-decoration: none;
+        
+        .section-title {
+            font-size: 2rem;
             font-weight: 600;
-            transition: color 0.3s ease;
+            color: #4ecdc4;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
-
-        .tool-link:hover {
-            color: #fff;
+        
+        .section-title::before {
+            content: '';
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(45deg, #4ecdc4, #45b7d1);
         }
-
+        
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .tool-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(78, 205, 196, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #4ecdc4, transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-5px);
+            border-color: #4ecdc4;
+            box-shadow: 0 10px 30px rgba(78, 205, 196, 0.2);
+        }
+        
+        .tool-card:hover::before {
+            opacity: 1;
+        }
+        
+        .tool-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .tool-icon {
+            font-size: 1.5rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            background: linear-gradient(45deg, #4ecdc4, #45b7d1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
         .tool-name {
-            color: #888;
-            margin-left: 8px;
-            font-size: 0.9rem;
-        }
-
-        .coming-soon {
-            color: #ff6b6b;
+            font-size: 1.2rem;
             font-weight: 600;
-            text-decoration: none;
+            color: #ffffff;
         }
-
-        /* Footer */
+        
+        .tool-description {
+            color: #a0a0a0;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+        
+        .tool-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: linear-gradient(45deg, #4ecdc4, #45b7d1);
+            color: #000;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+        }
+        
+        .tool-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(78, 205, 196, 0.4);
+        }
+        
+        .workflow-section {
+            text-align: center;
+            margin: 60px 0;
+        }
+        
+        .workflow-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .workflow-step {
+            position: relative;
+            padding: 30px 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            border: 1px solid rgba(78, 205, 196, 0.2);
+        }
+        
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(45deg, #4ecdc4, #45b7d1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #000;
+        }
+        
+        .step-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #4ecdc4;
+            margin-bottom: 10px;
+            margin-top: 10px;
+        }
+        
+        .step-description {
+            color: #a0a0a0;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
         .footer {
             text-align: center;
-            margin-top: 60px;
-            padding: 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 80px;
+            padding: 40px 0;
+            border-top: 1px solid rgba(78, 205, 196, 0.2);
         }
-
-        .footer-text {
-            font-family: 'JetBrains Mono', monospace;
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .footer-link {
+            color: #4ecdc4;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-link:hover {
+            color: #ffffff;
+        }
+        
+        .copyright {
             color: #666;
             font-size: 0.9rem;
         }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .content-grid {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-        }
-
+        
         @media (max-width: 768px) {
             .container {
                 padding: 15px;
             }
             
-            .manifesto {
+            .section {
                 padding: 20px;
+                margin-bottom: 40px;
             }
             
-            .workflow-section, .tools-section {
-                padding: 20px;
+            .tool-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .workflow-steps {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 15px;
             }
         }
-
-        /* Scroll animations */
-        @keyframes slideInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
         }
-
-        .workflow-step, .tool-category {
-            animation: slideInUp 0.6s ease forwards;
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
     </style>
 </head>
 <body>
+    <div class="cyber-grid"></div>
+    
     <div class="container">
         <header class="header">
-            <h1 class="glitch-title">Digital Delinquent</h1>
-            <p class="subtitle">// Toolkit for Creative Rebels</p>
-            <div class="manifesto">
-                <p><strong>Tired of "hustle harder" bullshit?</strong> Welcome to the rebellion. This isn't another basic toolkit – it's your arsenal for making money while the grindset bros burn out. Every tool here works while you're binge-watching Netflix. Because being lazy is a superpower when done right.</p>
-            </div>
+            <h1 class="title">DIGITAL DELINQUENT TOOLKIT</h1>
+            <p class="subtitle">Weapons for the Corporate Rebellion</p>
+            <p class="manifesto">
+                While others play by corporate rules, digital delinquents build empires in the shadows. 
+                These are the tools that separate rebels from desk slaves.
+            </p>
         </header>
-
-        <div class="content-grid">
-            <!-- Workflow Column -->
-            <div class="workflow-section">
-                <div class="section-header">
-                    <h2 class="section-title">🔥 Rebel Workflow</h2>
-                    <p class="section-subtitle">// How to win without trying</p>
+        
+        <section class="section">
+            <h2 class="section-title">🛡️ Privacy & Freedom Arsenal</h2>
+            <div class="tool-grid">
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-icon">🛡️</div>
+                        <div class="tool-name">NordVPN</div>
+                    </div>
+                    <div class="tool-description">
+                        The ghost protocol standard. Tested for a year - excellent customer service, responsive support, even on weekends. Your digital invisibility cloak.
+                    </div>
+                    <a href="#" class="tool-link">Activate Shield →</a>
                 </div>
-
-                <div class="workflow-step">
-                    <div class="step-title">1. 💡 Steal Like an Artist</div>
-                    <div class="step-description">Find trending content while scrolling TikTok at 2 AM.</div>
-                    <div class="step-note">Inspiration isn't theft – it's market research in pajamas</div>
-                </div>
-
-                <div class="workflow-step">
-                    <div class="step-title">2. 🤖 Let AI Be Your Ghost Writer</div>
-                    <div class="step-description">Feed it to Koala or Merlin with the prompt: "Make this viral but don't try so hard."</div>
-                    <div class="step-note">AI writes, you take credit. Capitalism baby.</div>
-                </div>
-
-                <div class="workflow-step">
-                    <div class="step-title">3. 🎬 Automate the Pretty Stuff</div>
-                    <div class="step-description">Drop into Blotato for instant video magic.</div>
-                    <div class="step-note">Why spend hours editing when algorithms don't care?</div>
-                </div>
-
-                <div class="workflow-step">
-                    <div class="step-title">4. 💅 Optional Try-Hard Mode</div>
-                    <div class="step-description">Add some CapCut sparkles if you're feeling fancy.</div>
-                    <div class="step-note">Sometimes perfectionism pays. But mostly it doesn't.</div>
-                </div>
-
-                <div class="workflow-step">
-                    <div class="step-title">5. 📱 Schedule & Disappear</div>
-                    <div class="step-description">Queue it up, then go touch grass (or more realistically, order DoorDash).</div>
-                    <div class="step-note">Content posted ✓ Mental health intact ✓</div>
-                </div>
-
-                <div class="workflow-step">
-                    <div class="step-title">6. 💰 Funnel → Passive Income → Victory</div>
-                    <div class="step-description">Systems.io runs the show while you argue with strangers on Twitter.</div>
-                    <div class="step-note">Money flows in. Effort flows out. Perfect balance.</div>
-                </div>
-
-                <div class="lazy-truth">
-                    <div class="truth-title">🏴‍☠️ REBEL TRUTH</div>
-                    <div class="truth-text">6 tools. Zero burnout. Making money while everyone else grinds themselves into dust.<br><em>This is why they call us lazy – we're just smarter.</em></div>
+                
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-icon">🔗</div>
+                        <div class="tool-name">Rebrandly</div>
+                    </div>
+                    <div class="tool-description">
+                        Link masking for the privacy-conscious. Track, cloak, and control your digital footprint. Essential for ghost protocol operations.
+                    </div>
+                    <a href="#" class="tool-link">Mask Links →</a>
                 </div>
             </div>
-
-            <!-- Tools Column -->
-            <div class="tools-section">
-                <div class="tools-header">
-                    <h2 class="tools-title">⚡ Weapon Arsenal</h2>
-                    <p class="tools-intro">Every tool in this collection works harder than a LinkedIn influencer at a networking event. Pick your poison and watch the magic happen.</p>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">🤖 AI Empire Tools</h2>
+            <div class="tool-grid">
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-icon">🐨</div>
+                        <div class="tool-name">Koala</div>
+                    </div>
+                    <div class="tool-description">
+                        Battle-tested AI writing that doesn't sound like corporate BS. Actually useful for content that converts instead of just filling space.
+                    </div>
+                    <a href="#" class="tool-link">Write Rebellion →</a>
                 </div>
-
-                <div class="tool-category">
-                    <h3 class="category-title">🧠 AI Content Machines</h3>
-                    <p class="category-desc">Because writing is for writers, and we're rebels</p>
-                    <div class="tool-list">
-                        <div class="tool-item">
-                            <span class="tool-arrow">▶</span>
-                            <a href="https://koala.sh/?via=eleonora" target="_blank" class="tool-link">Launch Weapon</a>
-                            <span class="tool-name">(Koala - SEO Content Beast)</span>
-                        </div>
-                        <div class="tool-item">
-                            <span class="tool-arrow">▶</span>
-                            <a href="https://www.getmerlin.in/chat?ref=yzkwnwm" target="_blank" class="tool-link">Launch Weapon</a>
-                            <span class="tool-name">(Merlin - AI Swiss Army Knife)</span>
-                        </div>
+                
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-icon">🧙</div>
+                        <div class="tool-name">Merlin</div>
+                    </div>
+                    <div class="tool-description">
+                        AI assistant that doesn't try to be your friend. Gets work done without the diplomatic nonsense. Straight answers for straight questions.
+                    </div>
+                    <a href="#" class="tool-link">Summon Merlin →</a>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">💰 Revenue Revolution</h2>
+            <div class="tool-grid">
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-icon">⚙️</div>
+                        <div class="tool-name">Systems.io</div>
+                    </div>
+                    <div class="tool-description">
+                        Funnel building without the enterprise price tag. Handles mainstream money flows while you focus on the empire expansion. Clean and compliant.
+                    </div>
+                    <a href="#" class="tool-link">Build Empire →</a>
+                </div>
+                
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-icon">🛍️</div>
+                        <div class="tool-name">Shopify</div>
+                    </div>
+                    <div class="tool-description">
+                        E-commerce empire foundation. When you're ready to scale beyond affiliate commissions into real business ownership. The professional choice.
+                    </div>
+                    <a href="#" class="tool-link">Launch Store →</a>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section workflow-section">
+            <h2 class="section-title">⚡ The Rebel Workflow</h2>
+            <div class="workflow-steps">
+                <div class="workflow-step">
+                    <div class="step-number">1</div>
+                    <div class="step-title">Test Everything</div>
+                    <div class="step-description">
+                        Never promote tools you haven't personally used for 30+ days. Your reputation is your empire's foundation.
                     </div>
                 </div>
-
-                <div class="tool-category">
-                    <h3 class="category-title">🕸️ Digital Trap Builders</h3>
-                    <p class="category-desc">Funnels that convert while you sleep</p>
-                    <div class="tool-list">
-                        <div class="tool-item">
-                            <span class="tool-arrow">▶</span>
-                            <a href="https://beacons.ai/creativelazy" target="_blank" class="tool-link">Launch Weapon</a>
-                            <span class="tool-name">(Beacons - Link-in-Bio OG)</span>
-                        </div>
-                        <div class="tool-item">
-                            <span class="tool-arrow">▶</span>
-                            <span class="coming-soon">Locked & Loaded</span>
-                            <span class="tool-name">(LeadPages - Coming Soon)</span>
-                        </div>
-                        <div class="tool-item">
-                            <span class="tool-arrow">▶</span>
-                            <a href="https://systeme.io/?sa=sa023908401759b8d1771f91d9568f72abe6a08fc9" target="_blank" class="tool-link">Launch Weapon</a>
-                            <span class="tool-name">(Systems.io - All-in-One Beast)</span>
-                        </div>
-                        <div class="tool-item">
-                            <span class="tool-arrow">▶</span>
-                            <a href="https://carrd.co" target="_blank" class="tool-link">Launch Weapon</a>
-                            <span class="tool-name">(Carrd - Minimalist's Dream)</span>
-                        </div>
+                
+                <div class="workflow-step">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Verify Links</div>
+                    <div class="step-description">
+                        Always test affiliate links with security tools. One phishing warning destroys years of trust building.
                     </div>
                 </div>
-
-                <div class="tool-category">
-                    <h3 class="category-title">💸 Money Multipliers</h3>
-                    <p class="category-desc">Affiliate networks that actually pay</p>
-                    <div class="tool-list">
-                        <div class="tool-item">
-                            <span class="tool-arrow">▶</span>
-                            <a href="shopify.pxf.io/mOknoy" target="_blank" class="tool-link">Launch Weapon</a>
-                            <span class="tool-name">(Shopify - E-commerce Empire)</span>
-                        </div>
-                        <div class="tool-item">
-                            <span class="tool-arrow">▶</span>
-                            <a href="https://go.rmhfrtnd.com?userId=a9f7776cca9e60e3c610759684592af2f002a4c51b0827a65fd8e21a354ced23" target="_blank" class="tool-link">Launch Weapon</a>
-                            <span class="tool-name">(Stripcash - Adult Network)</span>
-                        </div>
-                        <div class="tool-item">
-                            <span class="tool-arrow">▶</span>
-                            <span class="coming-soon">In the Vault</span>
-                            <span class="tool-name">(MyLead - Coming Soon)</span>
-                        </div>
-                        <div class="tool-item">
-                            <span class="tool-arrow">▶</span>
-                            <span class="coming-soon">In the Vault</span>
-                            <span class="tool-name">(Dropiscan - Coming Soon)</span>
-                        </div>
+                
+                <div class="workflow-step">
+                    <div class="step-number">3</div>
+                    <div class="step-title">Build Authority</div>
+                    <div class="step-description">
+                        Share real results, not marketing promises. Your audience wants proof, not another sales pitch.
                     </div>
                 </div>
-
-                <div class="tool-category">
-                    <h3 class="category-title">🎬 Visual Chaos Creators</h3>
-                    <p class="category-desc">Turn ideas into scroll-stopping content</p>
-                    <div class="tool-list">
-                        <div class="tool-item">
-                            <span class="tool-arrow">▶</span>
-                            <a href="https://blotato.com/?ref=eleonora" target="_blank" class="tool-link">Launch Weapon</a>
-                            <span class="tool-name">(Blotato - Video Magic Machine)</span>
-                        </div>
-                        <div class="tool-item">
-                            <span class="tool-arrow">▶</span>
-                            <span class="coming-soon">Charging Up</span>
-                            <span class="tool-name">(Fliki - AI Video Generator)</span>
-                        </div>
+                
+                <div class="workflow-step">
+                    <div class="step-number">4</div>
+                    <div class="step-title">Scale Smart</div>
+                    <div class="step-description">
+                        Quality partnerships over quick commissions. Long-term empire building beats short-term cash grabs.
                     </div>
                 </div>
             </div>
-        </div>
-
+        </section>
+        
         <footer class="footer">
-            <p class="footer-text">// Built by rebels, for rebels. No corporate BS allowed.</p>
+            <div class="footer-links">
+                <a href="#" class="footer-link">📋 Digital Manifesto</a>
+                <a href="#" class="footer-link">⚖️ Terms & Privacy</a>
+                <a href="#" class="footer-link">🏰 Join the Castle</a>
+            </div>
+            <div class="copyright">
+                © 2025 CreativeLazy Empire. Built by rebels, for rebels.
+            </div>
         </footer>
     </div>
-
-    <script>
-        // Add some interactive sparkle
-        document.addEventListener('DOMContentLoaded', function() {
-            const toolItems = document.querySelectorAll('.tool-item');
-            const workflowSteps = document.querySelectorAll('.workflow-step');
-            
-            // Add click effects
-            [...toolItems, ...workflowSteps].forEach(item => {
-                item.addEventListener('click', function(e) {
-                    if (!e.target.closest('a')) {
-                        this.style.transform = 'scale(0.98)';
-                        setTimeout(() => {
-                            this.style.transform = '';
-                        }, 150);
-                    }
-                });
-            });
-            
-            // Easter egg for persistent clickers
-            let clickCount = 0;
-            document.addEventListener('click', () => {
-                clickCount++;
-                if (clickCount === 50) {
-                    document.body.style.filter = 'hue-rotate(180deg)';
-                    setTimeout(() => {
-                        document.body.style.filter = '';
-                        clickCount = 0;
-                    }, 3000);
-                }
-            });
-        });
-    </script>
 </body>
 </html>
